@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TECHPULSE — Technology. Innovation. Tomorrow.</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans (Headings) & Inter (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              blue: '#2563EB',
+              electric: '#3B82F6',
+              navy: '#0F172A',
+              deep: '#0B1120',
+              slate: '#1E293B',
+            }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 font-sans antialiased transition-colors duration-300 selection:bg-blue-600 selection:text-white">
+
+  <!-- ===================================================================== -->
+  <!-- STICKY NAVIGATION BAR                                                 -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-50 bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18 py-3 gap-3">
+        
+        <!-- Brand Logo -->
+        <button onclick="navigateTo('home')" class="flex items-center gap-2.5 text-left group focus:outline-none shrink-0" aria-label="TechPulse Home">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center shadow-md shadow-blue-600/20 group-hover:scale-105 transition-transform">
+            <!-- Custom Geometric Pulse Wave SVG -->
+            <svg class="w-6 h-6 text-white" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2.5" y="2.5" width="23" height="23" rx="6" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5"/>
+              <path d="M5.5 14.5H9.5L12 8.5L15.5 20L18.2 12.5L20 14.5H22.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="22.5" cy="14.5" r="1.5" fill="#93C5FD"/>
+            </svg>
+          </div>
+          <div>
+            <span class="font-display font-extrabold text-xl tracking-tight text-slate-900 dark:text-white block leading-none">
+              TECH<span class="text-blue-600 dark:text-blue-400">PULSE</span>
+            </span>
+            <span class="text-[10px] font-medium tracking-wider uppercase text-slate-500 dark:text-slate-400 block mt-0.5">
+              Technology. Innovation. Tomorrow.
+            </span>
+          </div>
+        </button>
+
+        <!-- Desktop Navigation Links -->
+        <nav id="desktop-nav" class="hidden xl:flex items-center gap-1" aria-label="Main Navigation">
+          <!-- Populated dynamically via JS for active state accuracy -->
+        </nav>
+
+        <!-- Right Controls: Desktop Search, Theme Toggle, Mobile Menu Button -->
+        <div class="flex items-center gap-2 sm:gap-2.5">
+          <!-- Desktop Live Search -->
+          <div class="hidden md:flex items-center relative">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3" stroke-linecap="round"></path>
+            </svg>
+            <input
+              id="desktop-search-input"
+              type="text"
+              placeholder="Search articles..."
+              oninput="handleSearchInput(this.value)"
+              class="w-44 lg:w-52 pl-9 pr-7 py-2 text-sm rounded-xl bg-slate-100 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder-slate-400 border border-transparent focus:border-blue-500 focus:bg-white dark:focus:bg-slate-900 focus:outline-none transition-all"
+            />
+            <button
+              id="desktop-search-clear"
+              onclick="clearSearch()"
+              class="hidden absolute right-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-0.5"
+              title="Clear search"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Dark / Light Mode Toggle -->
+          <button
+            id="theme-toggle-btn"
+            onclick="toggleTheme()"
+            class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Toggle Dark or Light Mode"
+            title="Switch Theme"
+          >
+            <!-- Sun Icon (shown in Dark Mode) -->
+            <svg id="icon-sun" class="w-5 h-5 hidden text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke-linecap="round"></path>
+            </svg>
+            <!-- Moon Icon (shown in Light Mode) -->
+            <svg id="icon-moon" class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+
+          <!-- Mobile Hamburger Menu Button -->
+          <button
+            id="mobile-menu-btn"
+            onclick="toggleMobileMenu()"
+            class="xl:hidden p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors focus:outline-none"
+            aria-label="Open Navigation Menu"
+            aria-expanded="false"
+          >
+            <svg id="menu-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"></path>
+            </svg>
+            <svg id="menu-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile & Tablet Navigation Drawer -->
+    <div id="mobile-drawer" class="hidden xl:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] px-4 pt-3 pb-5 shadow-xl">
+      <!-- Mobile Search Bar -->
+      <div class="relative mb-3 md:hidden">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3" stroke-linecap="round"></path>
+        </svg>
+        <input
+          id="mobile-search-input"
+          type="text"
+          placeholder="Search technology articles..."
+          oninput="handleSearchInput(this.value)"
+          class="w-full pl-10 pr-8 py-2.5 text-sm rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 border border-transparent focus:border-blue-500 focus:outline-none"
+        />
+        <button
+          id="mobile-search-clear"
+          onclick="clearSearch()"
+          class="hidden absolute right-3 top-2.5 text-slate-400 hover:text-slate-600"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Links Grid -->
+      <nav id="mobile-nav-links" class="grid grid-cols-1 sm:grid-cols-2 gap-1.5" aria-label="Mobile Navigation">
+        <!-- Populated dynamically via JS -->
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- MAIN DYNAMIC VIEW CONTAINER                                           -->
+  <!-- ===================================================================== -->
+  <main id="app-content" class="min-h-[75vh]">
+    <!-- Views are rendered dynamically here: Home, Category, Article, Search, About, Contact -->
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- PROFESSIONAL 4-COLUMN DARK NAVY FOOTER                                -->
+  <!-- ===================================================================== -->
+  <footer class="bg-[#0B1120] text-slate-300 border-t border-slate-800/90 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
+        
+        <!-- Column 1: About TechPulse -->
+        <div class="space-y-4">
+          <button onclick="navigateTo('home')" class="flex items-center gap-2.5 text-left group focus:outline-none">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center shadow-md shadow-blue-600/20">
+              <svg class="w-5 h-5 text-white" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2.5" y="2.5" width="23" height="23" rx="6" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5"/>
+                <path d="M5.5 14.5H9.5L12 8.5L15.5 20L18.2 12.5L20 14.5H22.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <span class="font-display font-extrabold text-lg tracking-tight text-white block leading-none">
+                TECH<span class="text-blue-400">PULSE</span>
+              </span>
+              <span class="text-[10px] tracking-wider uppercase text-blue-400/90 font-medium block mt-0.5">
+                Technology. Innovation. Tomorrow.
+              </span>
+            </div>
+          </button>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Delivering clear, insightful technology journalism, product reviews, and digital innovation analysis for modern readers, students, and builders.
+          </p>
+          <!-- Social Media Icons -->
+          <div class="flex items-center gap-2.5 pt-1">
+            <button onclick="showToast('Following @TechPulseMedia on X (Twitter)')" aria-label="X Twitter" class="w-9 h-9 rounded-xl bg-slate-800/90 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </button>
+            <button onclick="showToast('Connected with TechPulse on LinkedIn')" aria-label="LinkedIn" class="w-9 h-9 rounded-xl bg-slate-800/90 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            </button>
+            <button onclick="showToast('Following @TechPulse on Instagram')" aria-label="Instagram" class="w-9 h-9 rounded-xl bg-slate-800/90 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+            </button>
+            <button onclick="showToast('Subscribed to TechPulse on YouTube')" aria-label="YouTube" class="w-9 h-9 rounded-xl bg-slate-800/90 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div>
+          <h3 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4">Quick Links</h3>
+          <ul class="space-y-2.5 text-sm">
+            <li><button onclick="navigateTo('home')" class="text-slate-400 hover:text-blue-400 transition-colors">Home</button></li>
+            <li><button onclick="navigateTo('about')" class="text-slate-400 hover:text-blue-400 transition-colors">About Us</button></li>
+            <li><button onclick="navigateTo('contact')" class="text-slate-400 hover:text-blue-400 transition-colors">Contact Us</button></li>
+            <li><button onclick="navigateToSection('latest-news-section')" class="text-slate-400 hover:text-blue-400 transition-colors">Latest Articles</button></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Categories -->
+        <div>
+          <h3 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4">Categories</h3>
+          <ul class="space-y-2.5 text-sm">
+            <li><button onclick="navigateTo('category', 'Technology')" class="text-slate-400 hover:text-blue-400 transition-colors">Technology</button></li>
+            <li><button onclick="navigateTo('category', 'Artificial Intelligence')" class="text-slate-400 hover:text-blue-400 transition-colors">Artificial Intelligence</button></li>
+            <li><button onclick="navigateTo('category', 'Smartphones')" class="text-slate-400 hover:text-blue-400 transition-colors">Smartphones</button></li>
+            <li><button onclick="navigateTo('category', 'Gadgets')" class="text-slate-400 hover:text-blue-400 transition-colors">Gadgets</button></li>
+            <li><button onclick="navigateTo('category', 'Software')" class="text-slate-400 hover:text-blue-400 transition-colors">Software</button></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact Information -->
+        <div>
+          <h3 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4">Contact Information</h3>
+          <ul class="space-y-3 text-sm text-slate-400">
+            <li class="flex items-start gap-2.5">
+              <svg class="w-4 h-4 text-blue-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <span>editorial@techpulse.io</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <svg class="w-4 h-4 text-blue-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span>+1 (555) 234-8910</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <svg class="w-4 h-4 text-blue-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Innovation District, Tech Hub</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Copyright Bar -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>© 2026 TechPulse Media. All rights reserved.</p>
+        <p class="text-slate-500">Built for Digital Innovation & Modern Tech Journalism</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- FLOATING TOAST NOTIFICATION                                           -->
+  <!-- ===================================================================== -->
+  <div id="toast-notification" class="fixed bottom-6 right-6 z-50 translate-y-20 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="bg-slate-900 dark:bg-blue-600 text-white px-4 py-3 rounded-xl shadow-2xl border border-slate-700/70 dark:border-blue-400/40 flex items-center gap-2.5 text-sm font-medium">
+      <svg class="w-4 h-4 text-blue-400 dark:text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span id="toast-message">Action completed</span>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION DATA & CLIENT-SIDE ROUTER LOGIC                           -->
+  <!-- ===================================================================== -->
+  <script>
+    // -----------------------------------------------------------------------
+    // 1. COMPLETE DATASET: 8 SAMPLE ARTICLES WITH FULL EDITORIAL CONTENT
+    // -----------------------------------------------------------------------
+    const ARTICLES = [
+      {
+        id: 'latest-technology-trends-2026',
+        title: 'Latest Technology Trends in 2026',
+        category: 'Technology',
+        featured: true,
+        popularRank: '01',
+        views: '48.2K reads',
+        author: 'Elena Vance',
+        authorRole: 'Chief Technology Editor',
+        date: 'November 12, 2026',
+        readTime: '6 min read',
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
+        excerpt: 'From autonomous multi-step AI agents to quantum-safe security and sustainable edge data centers, explore the foundational shifts defining enterprise and consumer tech in 2026.',
+        takeaways: [
+          'Autonomous AI agents are transitioning from passive chatbots to goal-driven workflow orchestrators.',
+          'Post-quantum cryptography standards are being rolled out across banking and cloud infrastructure.',
+          'Spatial computing headsets and lightweight smart glasses are finding real traction in design and engineering.'
+        ],
+        sections: [
+          {
+            heading: 'The Rise of Autonomous Digital Agents',
+            body: 'Throughout 2026, software has evolved beyond simple prompt-and-response interfaces into proactive agentic workflows. Modern enterprise platforms now deploy specialized digital agents capable of planning multi-step research, auditing codebases, coordinating logistics, and verifying data accuracy under human supervision. Rather than replacing human judgment, these systems eliminate repetitive operational bottlenecks.'
+          },
+          {
+            heading: 'Spatial Computing Enters Everyday Workspaces',
+            body: 'Lightweight mixed-reality displays and high-resolution pass-through optics have matured considerably. Architects, industrial designers, and remote engineering teams increasingly collaborate inside shared three-dimensional canvases, manipulating real-time CAD models without needing dedicated physical studio hardware.'
+          },
+          {
+            heading: 'Quantum-Safe Encryption Becomes Mandatory',
+            body: 'With quantum processors steadily scaling error-corrected qubits, cybersecurity teams across finance, healthcare, and government agencies have accelerated migration toward post-quantum cryptographic algorithms. Upgrading TLS protocols and long-term archival encryption is now a top boardroom priority.'
+          },
+          {
+            heading: 'Sustainable Edge & Liquid-Cooled Infrastructure',
+            body: 'High-density compute clusters demand unprecedented energy efficiency. Next-generation data centers pair direct-to-chip liquid cooling with on-site renewable microgrids and localized edge inference nodes—cutting latency for end users while dramatically lowering carbon footprints.'
+          }
+        ]
+      },
+      {
+        id: 'how-ai-is-changing-the-world',
+        title: 'How Artificial Intelligence Is Changing the World',
+        category: 'Artificial Intelligence',
+        featured: true,
+        popularRank: '02',
+        views: '41.9K reads',
+        author: 'Dr. Marcus Chen',
+        authorRole: 'Senior AI Correspondent',
+        date: 'November 10, 2026',
+        readTime: '7 min read',
+        image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80',
+        excerpt: 'Artificial intelligence is reshaping medical diagnostics, scientific discovery, personalized education, and creative production at an unprecedented global scale.',
+        takeaways: [
+          'Multimodal AI models analyze medical imaging and genomic markers to accelerate early disease detection.',
+          'Small, efficient on-device models bring private intelligence directly to laptops and phones.',
+          'Transparent AI governance and human-in-the-loop verification remain vital for trustworthy deployment.'
+        ],
+        sections: [
+          {
+            heading: 'Accelerating Healthcare & Scientific Discovery',
+            body: 'In clinical research and diagnostics, multimodal artificial intelligence is helping physicians spot subtle anomalies in radiology scans months earlier than conventional screening. Simultaneously, protein-folding and molecular simulation models are compressing early-stage drug discovery timelines from years into weeks.'
+          },
+          {
+            heading: 'Transforming Creative & Knowledge Industries',
+            body: 'Filmmakers, musicians, writers, and software engineers are integrating generative co-pilots directly into their creative toolkits. Instead of starting from a blank page, creators rapidly prototype storyboards, test interactive UI variations, and localize multimedia content into dozens of languages while retaining full artistic direction.'
+          },
+          {
+            heading: 'The Shift Toward Efficient On-Device Intelligence',
+            body: 'Not every intelligent task requires a massive cloud supercomputer. Quantized neural networks running natively on neural processing units (NPUs) enable instant translation, real-time audio transcription, and semantic file search completely offline—protecting user privacy and slashing cloud compute costs.'
+          },
+          {
+            heading: 'Building Responsible & Transparent Systems',
+            body: 'As AI systems influence hiring, lending, and public information, organizations are adopting rigorous watermarking, provenance tracking, and explainability benchmarks so users can verify how conclusions are reached.'
+          }
+        ]
+      },
+      {
+        id: 'best-smartphones-of-2026',
+        title: 'Best Smartphones of 2026',
+        category: 'Smartphones',
+        featured: true,
+        popularRank: '03',
+        views: '36.4K reads',
+        author: 'Liam O’Connor',
+        authorRole: 'Mobile & Hardware Reviewer',
+        date: 'November 8, 2026',
+        readTime: '5 min read',
+        image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80',
+        excerpt: 'High-density silicon-carbon batteries, 2nm flagship processors, computational telephoto lenses, and ultra-thin foldables headline this year’s standout smartphones.',
+        takeaways: [
+          'Silicon-carbon battery chemistry pushes flagship phones past two full days of real-world usage.',
+          '2-nanometer system-on-chips deliver desktop-grade ray tracing and instantaneous on-device AI.',
+          'Book-style foldables have finally achieved dust resistance and crease-free titanium hinges.'
+        ],
+        sections: [
+          {
+            heading: 'Silicon-Carbon Batteries Redefine Endurance',
+            body: 'The single biggest hardware leap in 2026 smartphones is widespread adoption of high-density silicon-carbon anodes. Manufacturers now pack 6,000mAh+ capacities into sleek 7.8mm chassis, delivering genuine two-day battery life without adding bulk or weight.'
+          },
+          {
+            heading: '2nm Flagship Silicon & Local AI Performance',
+            body: 'Built on cutting-edge 2-nanometer fabrication nodes, this year’s flagship processors combine extraordinary thermal efficiency with dedicated neural engines. Real-time video object removal, live call translation, and studio-grade voice isolation happen instantaneously on the handset.'
+          },
+          {
+            heading: 'Next-Generation Periscope & Computational Optics',
+            body: 'Larger 1-inch main sensors paired with variable-aperture periscope telephoto lenses allow mobile photographers to capture crisp portraits and low-light cityscapes that rival dedicated mirrorless cameras.'
+          },
+          {
+            heading: 'Foldables Reach Mainstream Durability',
+            body: 'With reinforced ultra-thin glass, precision titanium hinges, and improved ingress protection, foldable smartphones have shed their fragile reputation—offering pocketable tablet productivity for power users.'
+          }
+        ]
+      },
+      {
+        id: 'future-of-technology',
+        title: 'Future of Technology',
+        category: 'Technology',
+        featured: false,
+        popularRank: null,
+        views: '29.1K reads',
+        author: 'Elena Vance',
+        authorRole: 'Chief Technology Editor',
+        date: 'November 5, 2026',
+        readTime: '6 min read',
+        image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80',
+        excerpt: 'Looking toward the next decade: non-invasive brain-computer interfaces, general-purpose robotics, clean fusion milestones, and invisible ambient computing.',
+        takeaways: [
+          'Human-machine interfaces are evolving beyond touchscreens toward voice, gesture, and neural signals.',
+          'General-purpose humanoid and collaborative robots are entering warehouse and eldercare pilots.',
+          'Advances in solid-state energy storage and clean power will underwrite the next wave of compute.'
+        ],
+        sections: [
+          {
+            heading: 'Ambient Computing & Invisible Interfaces',
+            body: 'For two decades, human interaction with technology revolved around staring down at glowing rectangles. The next era is ambient computing—where sensors, spatial audio, and context-aware assistants fade naturally into our environment, responding only when needed.'
+          },
+          {
+            heading: 'Embodied Robotics in Physical Spaces',
+            body: 'By combining vision-language-action models with tactile robotic grippers, modern robots are learning to navigate unstructured environments. From automated laboratory assistants to logistics support, physical AI is bridging software intelligence with real-world dexterity.'
+          },
+          {
+            heading: 'Clean Energy & Solid-State Breakthroughs',
+            body: 'Every digital breakthrough depends on abundant, clean electricity. Rapid commercialization of solid-state batteries, next-generation geothermal plants, and magnetic confinement fusion research promises resilient power for tomorrow’s connected cities.'
+          },
+          {
+            heading: 'Human-Centric Design Philosophy',
+            body: 'Ultimately, the most enduring technologies of the future will be judged not by raw benchmark numbers, but by how seamlessly they enhance human wellbeing, accessibility, and creative freedom.'
+          }
+        ]
+      },
+      {
+        id: 'top-gadgets-for-students',
+        title: 'Top Gadgets for Students',
+        category: 'Gadgets',
+        featured: false,
+        popularRank: '04',
+        views: '33.7K reads',
+        author: 'Sofia Patel',
+        authorRole: 'Consumer Tech Specialist',
+        date: 'November 2, 2026',
+        readTime: '5 min read',
+        image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=80',
+        excerpt: 'Upgrade your semester setup with featherweight all-day ultrabooks, distraction-free e-ink note tablets, adaptive ANC headphones, and compact GaN chargers.',
+        takeaways: [
+          'ARM-based ultrabooks offer 18+ hours of library battery life without needing a power outlet.',
+          'E-ink digital notebooks reduce eye strain while keeping handwritten lecture notes searchable.',
+          'A single 100W multi-port GaN charger replaces bulky bricks for laptops, tablets, and phones.'
+        ],
+        sections: [
+          {
+            heading: 'Featherweight All-Day Ultrabooks',
+            body: 'Carrying a heavy laptop and charger across campus is a thing of the past. Modern efficiency-focused ultrabooks weigh under 1.2 kilograms, stay whisper-quiet during intense multitasking, and comfortably last through back-to-back lectures and late-night study sessions.'
+          },
+          {
+            heading: 'Distraction-Free E-Ink Note Tablets',
+            body: 'Paper-like e-ink tablets with low-latency styluses have become campus favorites. Students can annotate PDF textbooks, organize handwritten lecture diagrams into searchable folders, and read for hours without blue-light fatigue.'
+          },
+          {
+            heading: 'Adaptive Noise-Canceling Headphones',
+            body: 'Turning a bustling campus café or dorm lounge into a focused study zone requires smart active noise cancellation. Today’s lightweight over-ear headphones pair 40-hour battery life with multipoint Bluetooth switching between laptop and phone.'
+          },
+          {
+            heading: 'Compact 100W GaN Fast Chargers & Portable SSDs',
+            body: 'Rounding out any student backpack, a pocket-sized Gallium Nitride (GaN) wall adapter powers three devices simultaneously, while a rugged 2TB NVMe portable SSD keeps video projects and research backups secure.'
+          }
+        ]
+      },
+      {
+        id: 'cybersecurity-and-online-safety',
+        title: 'Cybersecurity and Online Safety',
+        category: 'Software',
+        featured: false,
+        popularRank: null,
+        views: '27.5K reads',
+        author: 'Devon Brooks',
+        authorRole: 'Security & Privacy Analyst',
+        date: 'October 29, 2026',
+        readTime: '6 min read',
+        image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80',
+        excerpt: 'Practical, essential habits to protect your digital identity in 2026: adopting cryptographic passkeys, spotting AI-crafted phishing, and securing cloud accounts.',
+        takeaways: [
+          'Replace traditional passwords with biometric passkeys wherever supported to neutralize phishing.',
+          'Use end-to-end encrypted password managers and authenticator apps instead of SMS two-factor codes.',
+          'Follow the 3-2-1 backup strategy to safeguard critical personal and academic files from ransomware.'
+        ],
+        sections: [
+          {
+            heading: 'Why Passkeys Are Replacing Passwords',
+            body: 'Traditional passwords remain the weakest link in personal security due to credential stuffing and convincing lookalike login pages. Cryptographic passkeys bind authentication directly to your device’s secure hardware enclave and the legitimate domain—making remote phishing virtually impossible.'
+          },
+          {
+            heading: 'Defending Against AI-Generated Social Engineering',
+            body: 'Attackers now use generative tools to craft highly personalized emails and cloned voice messages. Always verify urgent financial or account requests through an independent communication channel, and inspect sender domains carefully before clicking links.'
+          },
+          {
+            heading: 'Zero-Trust Hygiene for Everyday Browsing',
+            body: 'Keep operating systems and browsers patched automatically, audit third-party app permissions regularly, and rely on DNS-level tracker blocking alongside encrypted connections when working from public Wi-Fi networks.'
+          },
+          {
+            heading: 'Resilient 3-2-1 Cloud & Local Backups',
+            body: 'Hardware failures and accidental deletions happen unexpectedly. Maintaining three copies of your important documents across two media types—with one encrypted copy stored off-site in the cloud—ensures instant recovery.'
+          }
+        ]
+      },
+      {
+        id: 'how-technology-is-transforming-education',
+        title: 'How Technology Is Transforming Education',
+        category: 'Software',
+        featured: false,
+        popularRank: null,
+        views: '25.8K reads',
+        author: 'Sofia Patel',
+        authorRole: 'Consumer Tech Specialist',
+        date: 'October 25, 2026',
+        readTime: '5 min read',
+        image: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=1200&q=80',
+        excerpt: 'From adaptive AI study tutors and interactive virtual science labs to global collaborative classrooms, discover how digital tools are personalizing learning.',
+        takeaways: [
+          'Adaptive learning software tailors practice problems to each student’s exact pace and mastery level.',
+          'Browser-based 3D simulations give remote learners hands-on access to chemistry and physics labs.',
+          'Digital portfolios and real-time collaboration tools prepare students for modern hybrid careers.'
+        ],
+        sections: [
+          {
+            heading: 'Personalized Adaptive Study Companions',
+            body: 'Every learner grasps concepts at a different rhythm. Modern educational platforms analyze where a student hesitates, breaking complex calculus, coding, or marketing concepts down into guided Socratic hints rather than simply handing over answers.'
+          },
+          {
+            heading: 'Interactive Virtual Labs & Simulations',
+            body: 'High-cost laboratory equipment is no longer a barrier to hands-on experimentation. Interactive browser simulations allow university and high school students to test chemical reactions, circuit designs, and economic models safely from anywhere.'
+          },
+          {
+            heading: 'Global Collaborative Classrooms',
+            body: 'Cloud-native whiteboards, real-time captioning, and asynchronous video feedback connect students across continents. University marketing and engineering teams routinely co-create campaigns and software prototypes across time zones.'
+          },
+          {
+            heading: 'Empowering Educators with Actionable Insights',
+            body: 'By automating routine grading and surfacing class-wide comprehension trends, educational software frees professors and teachers to dedicate more face-to-face time to mentorship, critical debate, and creative problem solving.'
+          }
+        ]
+      },
+      {
+        id: 'the-future-of-smart-devices',
+        title: 'The Future of Smart Devices',
+        category: 'Gadgets',
+        featured: false,
+        popularRank: null,
+        views: '31.2K reads',
+        author: 'Liam O’Connor',
+        authorRole: 'Mobile & Hardware Reviewer',
+        date: 'October 21, 2026',
+        readTime: '5 min read',
+        image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80',
+        excerpt: 'Seamless Matter smart home interoperability, preventative health wearables, and ultra-low-power sensors are turning everyday objects into intuitive companions.',
+        takeaways: [
+          'The Matter standard has eliminated ecosystem lock-in across smart lighting, thermostats, and locks.',
+          'Next-gen smartwatches and smart rings focus on proactive sleep, stress, and cardiovascular trends.',
+          'Energy-harvesting sensors allow smart home devices to run for years without battery swaps.'
+        ],
+        sections: [
+          {
+            heading: 'Unified Smart Homes Powered by Matter',
+            body: 'For years, building a smart home meant juggling incompatible hubs and proprietary apps. With universal adoption of the Matter and Thread protocols, smart lights, climate sensors, and security cameras pair seamlessly across all major mobile ecosystems with local, low-latency reliability.'
+          },
+          {
+            heading: 'Preventative Health Wearables & Smart Rings',
+            body: 'Wearable technology has shifted from basic step counting to holistic wellness insights. Discreet titanium smart rings and multi-sensor watches track heart rate variability, skin temperature, and sleep recovery—offering actionable daily guidance.'
+          },
+          {
+            heading: 'Ultra-Low-Power & Energy-Harvesting Sensors',
+            body: 'Innovative ambient light and kinetic energy-harvesting chips are beginning to replace disposable coin-cell batteries in window sensors, smart switches, and environmental monitors.'
+          },
+          {
+            heading: 'Privacy-First Local Processing',
+            body: 'Modern smart home hubs increasingly process voice commands and camera object detection locally inside the home rather than streaming sensitive footage to external servers.'
+          }
+        ]
+      }
+    ];
+
+    const CATEGORY_META = {
+      'Technology': {
+        tagline: 'Breakthroughs, Industry Shifts & Future Infrastructure',
+        description: 'Deep-dive reporting on emerging computing paradigms, quantum security, sustainable data centers, and the innovations shaping tomorrow.'
+      },
+      'Artificial Intelligence': {
+        tagline: 'Machine Intelligence, Generative Workflows & Ethics',
+        description: 'Tracking how neural networks, autonomous agents, and on-device AI models are transforming science, creativity, and everyday software.'
+      },
+      'Smartphones': {
+        tagline: 'Flagship Reviews, Mobile Silicon & Camera Optics',
+        description: 'Hands-on analysis of next-generation mobile processors, silicon-carbon battery breakthroughs, computational photography, and foldables.'
+      },
+      'Gadgets': {
+        tagline: 'Wearables, Campus Essentials & Connected Hardware',
+        description: 'Curated buying guides and reviews covering ultrabooks, smart home ecosystems, health wearables, and everyday productivity gear.'
+      },
+      'Software': {
+        tagline: 'Cybersecurity, EdTech & Cloud Platforms',
+        description: 'Exploring modern digital safety, passkey authentication, adaptive educational platforms, and the apps powering connected work.'
+      }
+    };
+
+    const NAV_ITEMS = [
+      { label: 'Home', view: 'home', param: null },
+      { label: 'Technology', view: 'category', param: 'Technology' },
+      { label: 'Artificial Intelligence', view: 'category', param: 'Artificial Intelligence' },
+      { label: 'Smartphones', view: 'category', param: 'Smartphones' },
+      { label: 'Gadgets', view: 'category', param: 'Gadgets' },
+      { label: 'Software', view: 'category', param: 'Software' },
+      { label: 'About Us', view: 'about', param: null },
+      { label: 'Contact Us', view: 'contact', param: null }
+    ];
+
+    // -----------------------------------------------------------------------
+    // 2. APPLICATION STATE & THEME MANAGEMENT
+    // -----------------------------------------------------------------------
+    let appState = {
+      currentView: 'home',     // 'home' | 'category' | 'article' | 'search' | 'about' | 'contact'
+      selectedCategory: null,
+      selectedArticleId: null,
+      previousView: { view: 'home', param: null },
+      searchQuery: '',
+      mobileMenuOpen: false
+    };
+
+    function initTheme() {
+      try {
+        const savedTheme = localStorage.getItem('techpulse-theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {
+        document.documentElement.classList.remove('dark');
+      }
+      updateThemeIcons();
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      try {
+        localStorage.setItem('techpulse-theme', isDark ? 'dark' : 'light');
+      } catch (e) {}
+      updateThemeIcons();
+    }
+
+    function updateThemeIcons() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const sunIcon = document.getElementById('icon-sun');
+      const moonIcon = document.getElementById('icon-moon');
+      if (isDark) {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      } else {
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // 3. NAVIGATION, MOBILE DRAWER & SEARCH HANDLERS
+    // -----------------------------------------------------------------------
+    function renderNavigation() {
+      const desktopNav = document.getElementById('desktop-nav');
+      const mobileNav = document.getElementById('mobile-nav-links');
+
+      const isActive = (item) => {
+        if (appState.currentView === 'search') return false;
+        if (item.view === 'home' && appState.currentView === 'home') return true;
+        if (item.view === 'about' && appState.currentView === 'about') return true;
+        if (item.view === 'contact' && appState.currentView === 'contact') return true;
+        if (item.view === 'category' && appState.currentView === 'category' && appState.selectedCategory === item.param) return true;
+        return false;
+      };
+
+      desktopNav.innerHTML = NAV_ITEMS.map(item => {
+        const active = isActive(item);
+        const classes = active
+          ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/25'
+          : 'text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70';
+        const arg = item.param ? `'${item.param}'` : 'null';
+        return `<button onclick="navigateTo('${item.view}', ${arg})" class="px-2.5 py-1.5 rounded-lg text-[13px] font-medium transition-all whitespace-nowrap ${classes}">${item.label}</button>`;
+      }).join('');
+
+      mobileNav.innerHTML = NAV_ITEMS.map(item => {
+        const active = isActive(item);
+        const classes = active
+          ? 'bg-blue-600 text-white font-semibold'
+          : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800';
+        const arg = item.param ? `'${item.param}'` : 'null';
+        return `<button onclick="navigateTo('${item.view}', ${arg}); closeMobileMenu();" class="w-full text-left px-3.5 py-2.5 rounded-xl text-sm transition-colors ${classes}">${item.label}</button>`;
+      }).join('');
+    }
+
+    function toggleMobileMenu() {
+      appState.mobileMenuOpen = !appState.mobileMenuOpen;
+      const drawer = document.getElementById('mobile-drawer');
+      const openIcon = document.getElementById('menu-icon-open');
+      const closeIcon = document.getElementById('menu-icon-close');
+      const btn = document.getElementById('mobile-menu-btn');
+
+      if (appState.mobileMenuOpen) {
+        drawer.classList.remove('hidden');
+        openIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        drawer.classList.add('hidden');
+        openIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    function closeMobileMenu() {
+      if (appState.mobileMenuOpen) {
+        toggleMobileMenu();
+      }
+    }
+
+    function navigateTo(view, param = null) {
+      if (view !== 'article' && view !== 'search') {
+        appState.previousView = { view, param };
+      }
+      if (view !== 'search' && appState.searchQuery) {
+        appState.searchQuery = '';
+        syncSearchInputs('');
+      }
+
+      appState.currentView = view;
+      appState.selectedCategory = view === 'category' ? param : null;
+      appState.selectedArticleId = view === 'article' ? param : null;
+
+      renderNavigation();
+      renderCurrentView();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function navigateToSection(sectionId) {
+      if (appState.currentView !== 'home') {
+        navigateTo('home');
+        setTimeout(() => {
+          const el = document.getElementById(sectionId);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 80);
+      } else {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function openArticle(articleId) {
+      if (appState.currentView !== 'article') {
+        appState.previousView = {
+          view: appState.currentView,
+          param: appState.selectedCategory
+        };
+      }
+      appState.currentView = 'article';
+      appState.selectedArticleId = articleId;
+      closeMobileMenu();
+      renderNavigation();
+      renderCurrentView();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function syncSearchInputs(value) {
+      const desktopInput = document.getElementById('desktop-search-input');
+      const mobileInput = document.getElementById('mobile-search-input');
+      const desktopClear = document.getElementById('desktop-search-clear');
+      const mobileClear = document.getElementById('mobile-search-clear');
+
+      if (desktopInput && desktopInput.value !== value) desktopInput.value = value;
+      if (mobileInput && mobileInput.value !== value) mobileInput.value = value;
+
+      if (value.trim().length > 0) {
+        desktopClear?.classList.remove('hidden');
+        mobileClear?.classList.remove('hidden');
+      } else {
+        desktopClear?.classList.add('hidden');
+        mobileClear?.classList.add('hidden');
+      }
+    }
+
+    function handleSearchInput(rawQuery) {
+      appState.searchQuery = rawQuery;
+      syncSearchInputs(rawQuery);
+
+      if (rawQuery.trim().length === 0) {
+        navigateTo(appState.previousView.view || 'home', appState.previousView.param || null);
+        return;
+      }
+
+      appState.currentView = 'search';
+      renderNavigation();
+      renderCurrentView();
+    }
+
+    function clearSearch() {
+      appState.searchQuery = '';
+      syncSearchInputs('');
+      navigateTo(appState.previousView.view || 'home', appState.previousView.param || null);
+    }
+
+    // -----------------------------------------------------------------------
+    // 4. REUSABLE UI COMPONENTS
+    // -----------------------------------------------------------------------
+    function getFallbackImgAttr(title) {
+      const safeLabel = encodeURIComponent(title.slice(0, 26));
+      return `onerror="this.onerror=null; this.src='https://placehold.co/800x500/0f172a/3b82f6?text=${safeLabel}';"`;
+    }
+
+    function renderArticleCard(article) {
+      return `
+        <article class="group bg-white dark:bg-[#0F172A] rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-blue-950/5 dark:hover:shadow-blue-950/30 hover:-translate-y-1 transition-all duration-300 flex flex-col">
+          <div class="relative overflow-hidden aspect-[16/10] bg-slate-900 cursor-pointer" onclick="openArticle('${article.id}')">
+            <img
+              src="${article.image}"
+              alt="${article.title}"
+              ${getFallbackImgAttr(article.title)}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent"></div>
+            <button
+              onclick="event.stopPropagation(); navigateTo('category', '${article.category}')"
+              class="absolute top-3.5 left-3.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white shadow-md transition-colors"
+            >
+              ${article.category}
+            </button>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-2.5">
+              <span>${article.date}</span>
+              <span>•</span>
+              <span>${article.readTime}</span>
+            </div>
+            <h3
+              onclick="openArticle('${article.id}')"
+              class="font-display font-bold text-lg sm:text-xl text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer leading-snug mb-2.5"
+            >
+              ${article.title}
+            </h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3 mb-5 flex-1">
+              ${article.excerpt}
+            </p>
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">By ${article.author}</span>
+              <button
+                onclick="openArticle('${article.id}')"
+                class="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 group/btn"
+              >
+                <span>Read More</span>
+                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    // -----------------------------------------------------------------------
+    // 5. VIEW RENDERERS (HOME, CATEGORY, ARTICLE, SEARCH, ABOUT, CONTACT)
+    // -----------------------------------------------------------------------
+    function renderHomeView() {
+      const featuredArticles = ARTICLES.filter(a => a.featured);
+      const latestArticles = ARTICLES.filter(a => !a.featured);
+      const popularArticles = ARTICLES.filter(a => a.popularRank).sort((a, b) => a.popularRank.localeCompare(b.popularRank));
+      const spotlight = featuredArticles[0];
+
+      return `
+        <!-- 1. HERO BANNER -->
+        <section class="relative overflow-hidden bg-gradient-to-br from-[#0B1120] via-[#0F172A] to-[#172554] text-white border-b border-slate-800">
+          <!-- Subtle Decorative Glow -->
+          <div class="absolute -top-24 -right-24 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+              
+              <!-- Left Hero Copy -->
+              <div class="lg:col-span-7 space-y-6">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-xs font-semibold tracking-wide uppercase">
+                  <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+                  2026 Digital Innovation & Tech Journalism
+                </div>
+
+                <h1 class="font-display font-extrabold text-3xl sm:text-5xl lg:text-[54px] tracking-tight leading-[1.1] text-white">
+                  Technology. <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Innovation.</span> Tomorrow.
+                </h1>
+
+                <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
+                  Your trusted source for forward-looking analysis on artificial intelligence, flagship smartphones, next-generation gadgets, and the software shaping our connected future.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-3.5 pt-2">
+                  <button
+                    onclick="navigateToSection('featured-articles-section')"
+                    class="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 transition-all inline-flex items-center gap-2"
+                  >
+                    <span>Explore Articles</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button
+                    onclick="navigateToSection('newsletter-section')"
+                    class="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/20 font-semibold text-sm transition-all"
+                  >
+                    Subscribe
+                  </button>
+                </div>
+
+                <!-- Quick Category Pills -->
+                <div class="pt-4 flex flex-wrap items-center gap-2 text-xs text-slate-400">
+                  <span class="font-medium text-slate-300 mr-1">Trending Topics:</span>
+                  ${Object.keys(CATEGORY_META).map(cat => `
+                    <button onclick="navigateTo('category', '${cat}')" class="px-3 py-1 rounded-lg bg-slate-800/80 hover:bg-blue-600/80 text-slate-300 hover:text-white border border-slate-700/80 transition-colors">
+                      ${cat}
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- Right Hero Highlighted Story Card -->
+              <div class="lg:col-span-5">
+                <div
+                  onclick="openArticle('${spotlight.id}')"
+                  class="group cursor-pointer rounded-2xl bg-slate-900/90 border border-slate-700/80 overflow-hidden shadow-2xl hover:border-blue-500/60 transition-all"
+                >
+                  <div class="relative aspect-[16/10] overflow-hidden">
+                    <img
+                      src="${spotlight.image}"
+                      alt="${spotlight.title}"
+                      ${getFallbackImgAttr(spotlight.title)}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"></div>
+                    <span class="absolute top-3.5 left-3.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-600 text-white uppercase tracking-wider">
+                      Cover Story
+                    </span>
+                  </div>
+                  <div class="p-6 space-y-3">
+                    <div class="flex items-center gap-2 text-xs text-blue-400 font-semibold">
+                      <span>${spotlight.category}</span>
+                      <span class="text-slate-500">•</span>
+                      <span class="text-slate-400 font-normal">${spotlight.readTime}</span>
+                    </div>
+                    <h2 class="font-display font-bold text-xl text-white group-hover:text-blue-400 transition-colors leading-snug">
+                      ${spotlight.title}
+                    </h2>
+                    <p class="text-sm text-slate-300 line-clamp-2 leading-relaxed">
+                      ${spotlight.excerpt}
+                    </p>
+                    <div class="pt-2 flex items-center justify-between text-xs text-slate-400">
+                      <span>By ${spotlight.author}</span>
+                      <span class="text-blue-400 font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                        Read Story →
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. FEATURED ARTICLES SECTION (3-Column Grid) -->
+        <section id="featured-articles-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Editor’s Picks</span>
+              <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white mt-1">
+                Featured Articles
+              </h2>
+            </div>
+            <p class="text-sm text-slate-500 dark:text-slate-400 max-w-md">
+              In-depth stories covering the biggest breakthroughs in technology, AI, and flagship mobile hardware.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            ${featuredArticles.map(article => renderArticleCard(article)).join('')}
+          </div>
+        </section>
+
+        <!-- 3. LATEST TECHNOLOGY NEWS & 4. POPULAR ARTICLES SECTION -->
+        <section id="latest-news-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            
+            <!-- Left 8 Columns: Latest Technology News -->
+            <div class="lg:col-span-8">
+              <div class="flex items-end justify-between mb-7">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Fresh Off The Desk</span>
+                  <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white mt-1">
+                    Latest Technology News
+                  </h2>
+                </div>
+              </div>
+
+              <div class="space-y-5">
+                ${latestArticles.map(article => `
+                  <article class="group bg-white dark:bg-[#0F172A] rounded-2xl p-4 sm:p-5 border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-lg hover:border-blue-500/40 transition-all flex flex-col sm:flex-row gap-5 items-center">
+                    <div
+                      onclick="openArticle('${article.id}')"
+                      class="w-full sm:w-52 aspect-[16/10] sm:aspect-[4/3] rounded-xl overflow-hidden shrink-0 bg-slate-900 cursor-pointer"
+                    >
+                      <img
+                        src="${article.image}"
+                        alt="${article.title}"
+                        ${getFallbackImgAttr(article.title)}
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex flex-wrap items-center gap-2.5 text-xs mb-2">
+                        <button
+                          onclick="navigateTo('category', '${article.category}')"
+                          class="px-2.5 py-0.5 rounded-md font-semibold bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition-colors"
+                        >
+                          ${article.category}
+                        </button>
+                        <span class="text-slate-500 dark:text-slate-400">${article.date}</span>
+                        <span class="text-slate-400">•</span>
+                        <span class="text-slate-500 dark:text-slate-400">${article.readTime}</span>
+                      </div>
+                      <h3
+                        onclick="openArticle('${article.id}')"
+                        class="font-display font-bold text-lg sm:text-xl text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer mb-2"
+                      >
+                        ${article.title}
+                      </h3>
+                      <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed mb-3">
+                        ${article.excerpt}
+                      </p>
+                      <button
+                        onclick="openArticle('${article.id}')"
+                        class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 hover:text-blue-700"
+                      >
+                        <span>Read More</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                          <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </article>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Right 4 Columns: Popular Articles (01 - 04) -->
+            <aside class="lg:col-span-4">
+              <div class="bg-white dark:bg-[#0F172A] rounded-2xl p-6 border border-slate-200/90 dark:border-slate-800 shadow-sm sticky top-24">
+                <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-100 dark:border-slate-800">
+                  <div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Most Read</span>
+                    <h2 class="font-display font-extrabold text-xl text-slate-900 dark:text-white">
+                      Popular Articles
+                    </h2>
+                  </div>
+                  <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="space-y-5">
+                  ${popularArticles.map(article => `
+                    <div
+                      onclick="openArticle('${article.id}')"
+                      class="group cursor-pointer flex items-start gap-3.5 pb-4 last:pb-0 border-b last:border-b-0 border-slate-100 dark:border-slate-800/80"
+                    >
+                      <span class="font-display font-extrabold text-2xl text-blue-600/30 dark:text-blue-400/30 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-none pt-0.5 select-none">
+                        ${article.popularRank}
+                      </span>
+                      <div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-slate-900">
+                        <img
+                          src="${article.image}"
+                          alt="${article.title}"
+                          ${getFallbackImgAttr(article.title)}
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <span class="text-[11px] font-semibold text-blue-600 dark:text-blue-400 block mb-0.5">
+                          ${article.category}
+                        </span>
+                        <h3 class="font-display font-bold text-sm text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                          ${article.title}
+                        </h3>
+                        <span class="text-[11px] text-slate-400 mt-1 block">${article.views}</span>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </aside>
+
+          </div>
+        </section>
+
+        <!-- 5. NEWSLETTER SUBSCRIPTION SECTION -->
+        <section id="newsletter-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+          <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#0F172A] via-[#1E293B] to-[#1D4ED8] p-8 sm:p-12 lg:p-14 text-white shadow-xl">
+            <div class="absolute right-0 top-0 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div class="lg:col-span-7 space-y-3">
+                <span class="inline-block px-3 py-1 rounded-full bg-white/10 text-blue-200 text-xs font-semibold uppercase tracking-wider">
+                  Weekly Tech Briefing
+                </span>
+                <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-white leading-tight">
+                  Stay Ahead of Tomorrow’s Tech Curve
+                </h2>
+                <p class="text-sm sm:text-base text-slate-200/90 max-w-xl leading-relaxed">
+                  Join 45,000+ students, innovators, and digital leaders receiving our curated weekly digest of AI breakthroughs, gadget reviews, and industry insights.
+                </p>
+              </div>
+
+              <div class="lg:col-span-5">
+                <form id="newsletter-form" onsubmit="handleNewsletterSubmit(event)" novalidate class="space-y-3">
+                  <div class="flex flex-col sm:flex-row gap-2.5">
+                    <input
+                      id="newsletter-email"
+                      type="email"
+                      placeholder="Enter your email address"
+                      aria-label="Email address for newsletter"
+                      class="flex-1 px-4 py-3.5 rounded-xl bg-white text-slate-900 placeholder-slate-400 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                    <button
+                      type="submit"
+                      class="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-lg shadow-blue-950/40 transition-colors shrink-0"
+                    >
+                      Subscribe
+                    </button>
+                  </div>
+                  <p id="newsletter-feedback" class="text-xs text-blue-200/80">
+                    No spam ever. Unsubscribe with one click anytime.
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderCategoryView(categoryName) {
+      const meta = CATEGORY_META[categoryName] || {
+        tagline: 'Curated Coverage',
+        description: 'Explore our latest articles and editorial insights.'
+      };
+      const matching = ARTICLES.filter(a => a.category === categoryName);
+
+      return `
+        <!-- Category Header Banner -->
+        <section class="bg-gradient-to-br from-[#0B1120] via-[#0F172A] to-[#1E3A8A] text-white border-b border-slate-800">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+            <button
+              onclick="navigateTo('home')"
+              class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-300 hover:text-white mb-4 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Back to Home</span>
+            </button>
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div class="space-y-2 max-w-2xl">
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-400">${meta.tagline}</span>
+                <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white">
+                  ${categoryName}
+                </h1>
+                <p class="text-sm sm:text-base text-slate-300 leading-relaxed pt-1">
+                  ${meta.description}
+                </p>
+              </div>
+              <div class="shrink-0">
+                <span class="inline-flex items-center px-4 py-2 rounded-xl bg-white/10 border border-white/15 text-sm font-semibold text-blue-200">
+                  ${matching.length} ${matching.length === 1 ? 'Article' : 'Articles'} Published
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Category Articles Grid -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            ${matching.map(article => renderArticleCard(article)).join('')}
+          </div>
+
+          <!-- Browse Other Categories Strip -->
+          <div class="mt-14 p-6 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span class="font-display font-bold text-sm text-slate-900 dark:text-white">Explore More Verticals:</span>
+            <div class="flex flex-wrap gap-2">
+              ${Object.keys(CATEGORY_META).filter(c => c !== categoryName).map(cat => `
+                <button
+                  onclick="navigateTo('category', '${cat}')"
+                  class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-blue-600 text-slate-700 hover:text-white dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-blue-600 transition-colors"
+                >
+                  ${cat}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderArticleView(articleId) {
+      const article = ARTICLES.find(a => a.id === articleId) || ARTICLES[0];
+      const related = ARTICLES.filter(a => a.id !== article.id)
+        .sort((a, b) => (a.category === article.category ? -1 : 1))
+        .slice(0, 3);
+
+      const backLabel = appState.previousView.view === 'category' && appState.previousView.param
+        ? `Back to ${appState.previousView.param}`
+        : 'Back to Home';
+      const backAction = appState.previousView.view === 'category' && appState.previousView.param
+        ? `navigateTo('category', '${appState.previousView.param}')`
+        : `navigateTo('home')`;
+
+      return `
+        <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
+          <!-- Back Button & Category Pill -->
+          <div class="flex items-center justify-between gap-4 mb-6">
+            <button
+              onclick="${backAction}"
+              class="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>${backLabel}</span>
+            </button>
+
+            <button
+              onclick="navigateTo('category', '${article.category}')"
+              class="px-3.5 py-1 rounded-full text-xs font-bold bg-blue-600 text-white hover:bg-blue-500 transition-colors"
+            >
+              ${article.category}
+            </button>
+          </div>
+
+          <!-- Article Headline & Metadata -->
+          <header class="space-y-5 mb-8">
+            <h1 class="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-white leading-tight">
+              ${article.title}
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+              ${article.excerpt}
+            </p>
+
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-4 pb-4 border-y border-slate-200 dark:border-slate-800">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-display font-bold text-sm flex items-center justify-center">
+                  ${article.author.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                </div>
+                <div>
+                  <div class="font-semibold text-sm text-slate-900 dark:text-white">${article.author}</div>
+                  <div class="text-xs text-slate-500 dark:text-slate-400">${article.authorRole} • ${article.date} • ${article.readTime}</div>
+                </div>
+              </div>
+
+              <!-- Share / Copy Link Button -->
+              <button
+                onclick="copyArticleLink('${article.title.replace(/'/g, "\\'")}')"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-blue-600 text-slate-700 hover:text-white dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-blue-600 text-xs font-semibold transition-colors"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Share / Copy Link</span>
+              </button>
+            </div>
+          </header>
+
+          <!-- Hero Feature Image -->
+          <div class="rounded-2xl overflow-hidden aspect-[16/9] bg-slate-900 shadow-lg mb-10">
+            <img
+              src="${article.image}"
+              alt="${article.title}"
+              ${getFallbackImgAttr(article.title)}
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <!-- Key Takeaways Highlight Box -->
+          <div class="rounded-2xl bg-blue-50/90 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/60 p-6 sm:p-7 mb-10">
+            <div class="flex items-center gap-2 text-blue-700 dark:text-blue-400 font-display font-bold text-sm uppercase tracking-wider mb-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Key Takeaways</span>
+            </div>
+            <ul class="space-y-2.5 text-sm sm:text-base text-slate-700 dark:text-slate-200">
+              ${article.takeaways.map(point => `
+                <li class="flex items-start gap-2.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 mt-2.5 shrink-0"></span>
+                  <span>${point}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <!-- Full Article Body Paragraphs -->
+          <div class="space-y-8 text-slate-700 dark:text-slate-300 text-base sm:text-[17px] leading-relaxed">
+            ${article.sections.map(sec => `
+              <section class="space-y-3">
+                <h2 class="font-display font-bold text-xl sm:text-2xl text-slate-900 dark:text-white">
+                  ${sec.heading}
+                </h2>
+                <p>${sec.body}</p>
+              </section>
+            `).join('')}
+          </div>
+        </article>
+
+        <!-- Related Articles Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 mt-14 border-t border-slate-200 dark:border-slate-800">
+          <div class="flex items-end justify-between mb-8">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Continue Reading</span>
+              <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white mt-1">
+                Related Articles
+              </h2>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+            ${related.map(rel => renderArticleCard(rel)).join('')}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderSearchView() {
+      const q = appState.searchQuery.trim().toLowerCase();
+      const results = ARTICLES.filter(article =>
+        article.title.toLowerCase().includes(q) ||
+        article.category.toLowerCase().includes(q) ||
+        article.excerpt.toLowerCase().includes(q) ||
+        article.author.toLowerCase().includes(q) ||
+        article.sections.some(s => s.heading.toLowerCase().includes(q) || s.body.toLowerCase().includes(q))
+      );
+
+      return `
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-200 dark:border-slate-800">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Live Search Results</span>
+              <h1 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white mt-1">
+                Showing matches for “${appState.searchQuery}”
+              </h1>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                Found ${results.length} ${results.length === 1 ? 'article' : 'articles'}
+              </p>
+            </div>
+            <button
+              onclick="clearSearch()"
+              class="self-start sm:self-auto px-4 py-2.5 rounded-xl bg-slate-200/80 hover:bg-slate-300/80 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold transition-colors"
+            >
+              Clear Search
+            </button>
+          </div>
+
+          ${results.length > 0 ? `
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+              ${results.map(article => renderArticleCard(article)).join('')}
+            </div>
+          ` : `
+            <div class="text-center py-16 px-4 rounded-3xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800">
+              <div class="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto mb-4">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h2 class="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">No matching articles found</h2>
+              <p class="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-6">
+                Try searching for keywords like “AI”, “Smartphones”, “2026”, “Cybersecurity”, “Students”, or “Smart Devices”.
+              </p>
+              <button
+                onclick="clearSearch()"
+                class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors"
+              >
+                Browse All Articles
+              </button>
+            </div>
+          `}
+        </section>
+      `;
+    }
+
+    function renderAboutView() {
+      const team = [
+        {
+          name: 'Elena Vance',
+          role: 'Editor-in-Chief',
+          initials: 'EV',
+          bio: 'Covers enterprise innovation, emerging computing architectures, and global technology policy with over a decade of editorial leadership.'
+        },
+        {
+          name: 'Dr. Marcus Chen',
+          role: 'Senior AI Correspondent',
+          initials: 'MC',
+          bio: 'Translates complex machine learning research, neural architectures, and ethical AI governance into clear, actionable insights.'
+        },
+        {
+          name: 'Sofia Patel',
+          role: 'Consumer Tech & EdTech Lead',
+          initials: 'SP',
+          bio: 'Tests student ultrabooks, connected gadgets, and digital classroom tools designed to boost modern learning and creativity.'
+        }
+      ];
+
+      return `
+        <!-- About Hero -->
+        <section class="bg-gradient-to-br from-[#0B1120] via-[#0F172A] to-[#1E3A8A] text-white border-b border-slate-800">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+            <div class="max-w-3xl space-y-4">
+              <span class="inline-block px-3.5 py-1 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-xs font-semibold uppercase tracking-wider">
+                About TechPulse
+              </span>
+              <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white leading-tight">
+                Technology. Innovation. Tomorrow.
+              </h1>
+              <p class="text-base sm:text-lg text-slate-300 leading-relaxed">
+                TechPulse is a modern digital technology publication dedicated to demystifying rapid innovation—empowering university students, creators, marketers, and tech enthusiasts to navigate what comes next.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Key Metrics Strip -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div class="bg-white dark:bg-[#0F172A] rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-md text-center">
+              <div class="font-display font-extrabold text-2xl sm:text-3xl text-blue-600 dark:text-blue-400">250K+</div>
+              <div class="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 mt-1">Monthly Readers</div>
+            </div>
+            <div class="bg-white dark:bg-[#0F172A] rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-md text-center">
+              <div class="font-display font-extrabold text-2xl sm:text-3xl text-blue-600 dark:text-blue-400">180+</div>
+              <div class="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 mt-1">In-Depth Reviews</div>
+            </div>
+            <div class="bg-white dark:bg-[#0F172A] rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-md text-center">
+              <div class="font-display font-extrabold text-2xl sm:text-3xl text-blue-600 dark:text-blue-400">5</div>
+              <div class="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 mt-1">Core Tech Verticals</div>
+            </div>
+            <div class="bg-white dark:bg-[#0F172A] rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-md text-center">
+              <div class="font-display font-extrabold text-2xl sm:text-3xl text-blue-600 dark:text-blue-400">100%</div>
+              <div class="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 mt-1">Independent Editorial</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Mission & Editorial Vision -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div class="space-y-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Our Publishing Vision</span>
+              <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white">
+                Clarity Over Hype in a Fast-Moving Digital World
+              </h2>
+              <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                Every week brings bold announcements across artificial intelligence, mobile hardware, and cloud software. At TechPulse, we cut through jargon to explain why a breakthrough matters, how it works in practice, and what it means for everyday users.
+              </p>
+              <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                Designed with clean digital publishing principles and reader-first UX, our platform bridges rigorous tech journalism with accessible storytelling.
+              </p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-6 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-3 font-bold">01</div>
+                <h3 class="font-display font-bold text-base text-slate-900 dark:text-white mb-1.5">Evidence-Based Analysis</h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Every review and trend report is grounded in real-world testing and verified industry benchmarks.</p>
+              </div>
+              <div class="p-6 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-3 font-bold">02</div>
+                <h3 class="font-display font-bold text-base text-slate-900 dark:text-white mb-1.5">Student & Builder Focus</h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Practical guides tailored for learners, digital marketers, developers, and future innovators.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Editorial Team Cards -->
+          <div class="pt-16">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+              <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Editorial Leadership</span>
+              <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white mt-1">
+                Meet the Voices Behind TechPulse
+              </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+              ${team.map(member => `
+                <div class="bg-white dark:bg-[#0F172A] rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                  <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-display font-extrabold text-xl flex items-center justify-center mx-auto mb-4 shadow-md shadow-blue-600/20">
+                    ${member.initials}
+                  </div>
+                  <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">${member.name}</h3>
+                  <span class="text-xs font-semibold text-blue-600 dark:text-blue-400 block mt-0.5 mb-3">${member.role}</span>
+                  <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">${member.bio}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderContactView() {
+      return `
+        <!-- Contact Header -->
+        <section class="bg-gradient-to-br from-[#0B1120] via-[#0F172A] to-[#1E3A8A] text-white border-b border-slate-800">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+            <div class="max-w-2xl space-y-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-blue-400">Get In Touch</span>
+              <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white">
+                Contact TechPulse
+              </h1>
+              <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                Have a story tip, product review inquiry, partnership proposal, or feedback on our coverage? Reach out to our editorial desk.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact Grid: Info Cards + Validated Form -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Left 5 Columns: Contact Detail Cards -->
+            <div class="lg:col-span-5 space-y-5">
+              <div class="bg-white dark:bg-[#0F172A] rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start gap-4">
+                <div class="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </div>
+                <div>
+                  <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">Editorial Desk</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 mb-1.5">For story pitches, tips & reader letters</p>
+                  <span class="text-sm font-semibold text-blue-600 dark:text-blue-400">editorial@techpulse.io</span>
+                </div>
+              </div>
+
+              <div class="bg-white dark:bg-[#0F172A] rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start gap-4">
+                <div class="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <div>
+                  <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">Press & Partnerships</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 mb-1.5">Media kits, sponsorships & review units</p>
+                  <span class="text-sm font-semibold text-blue-600 dark:text-blue-400">partners@techpulse.io</span>
+                </div>
+              </div>
+
+              <div class="bg-white dark:bg-[#0F172A] rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start gap-4">
+                <div class="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div>
+                  <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">Newsroom & Office Hours</h3>
+                  <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">Innovation District, Tech Hub</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Monday – Friday • 9:00 AM – 6:00 PM</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right 7 Columns: Interactive Contact Form -->
+            <div class="lg:col-span-7">
+              <div id="contact-form-wrapper" class="bg-white dark:bg-[#0F172A] rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
+                <h2 class="font-display font-bold text-xl sm:text-2xl text-slate-900 dark:text-white mb-1.5">
+                  Send Us a Message
+                </h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+                  Fill out the form below and our editorial team will respond within one business day.
+                </p>
+
+                <form id="contact-form" onsubmit="handleContactSubmit(event)" novalidate class="space-y-5">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label for="contact-name" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                        Full Name *
+                      </label>
+                      <input
+                        id="contact-name"
+                        type="text"
+                        placeholder="Alex Rivera"
+                        class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:border-blue-500 focus:outline-none"
+                      />
+                      <p id="error-name" class="hidden text-xs text-rose-500 mt-1.5">Please enter your full name.</p>
+                    </div>
+
+                    <div>
+                      <label for="contact-email" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                        Email Address *
+                      </label>
+                      <input
+                        id="contact-email"
+                        type="email"
+                        placeholder="alex@university.edu"
+                        class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:border-blue-500 focus:outline-none"
+                      />
+                      <p id="error-email" class="hidden text-xs text-rose-500 mt-1.5">Please enter a valid email address.</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="contact-topic" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                      Topic
+                    </label>
+                    <select
+                      id="contact-topic"
+                      class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:border-blue-500 focus:outline-none"
+                    >
+                      <option value="General Editorial Inquiry">General Editorial Inquiry</option>
+                      <option value="Story Tip / News Pitch">Story Tip / News Pitch</option>
+                      <option value="Product Review Request">Product Review Request</option>
+                      <option value="Digital Marketing / Partnership">Digital Marketing / Partnership</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="contact-message" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                      Message *
+                    </label>
+                    <textarea
+                      id="contact-message"
+                      rows="5"
+                      placeholder="Write your message or inquiry here..."
+                      class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:border-blue-500 focus:outline-none resize-y"
+                    ></textarea>
+                    <p id="error-message" class="hidden text-xs text-rose-500 mt-1.5">Please enter a message (at least 10 characters).</p>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-lg shadow-blue-600/25 transition-all"
+                  >
+                    Send Message
+                  </button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      `;
+    }
+
+    function renderCurrentView() {
+      const container = document.getElementById('app-content');
+      if (!container) return;
+
+      switch (appState.currentView) {
+        case 'category':
+          container.innerHTML = renderCategoryView(appState.selectedCategory);
+          break;
+        case 'article':
+          container.innerHTML = renderArticleView(appState.selectedArticleId);
+          break;
+        case 'search':
+          container.innerHTML = renderSearchView();
+          break;
+        case 'about':
+          container.innerHTML = renderAboutView();
+          break;
+        case 'contact':
+          container.innerHTML = renderContactView();
+          break;
+        case 'home':
+        default:
+          container.innerHTML = renderHomeView();
+          break;
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // 6. INTERACTIVE FORM VALIDATION, CLIPBOARD & TOAST HELPERS
+    // -----------------------------------------------------------------------
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    }
+
+    function handleNewsletterSubmit(event) {
+      event.preventDefault();
+      const input = document.getElementById('newsletter-email');
+      const feedback = document.getElementById('newsletter-feedback');
+      const email = input.value.trim();
+
+      if (!isValidEmail(email)) {
+        input.classList.add('ring-2', 'ring-rose-400');
+        feedback.textContent = 'Please enter a valid email address (e.g., alex@example.com).';
+        feedback.className = 'text-xs text-rose-200 font-semibold';
+        return;
+      }
+
+      input.classList.remove('ring-2', 'ring-rose-400');
+      input.value = '';
+      feedback.textContent = `Success! ${email} is now subscribed to the TechPulse Weekly Briefing.`;
+      feedback.className = 'text-xs text-emerald-300 font-semibold';
+      showToast('Subscribed to TechPulse Weekly Briefing!');
+    }
+
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      const nameInput = document.getElementById('contact-name');
+      const emailInput = document.getElementById('contact-email');
+      const topicInput = document.getElementById('contact-topic');
+      const messageInput = document.getElementById('contact-message');
+
+      const errName = document.getElementById('error-name');
+      const errEmail = document.getElementById('error-email');
+      const errMessage = document.getElementById('error-message');
+
+      let valid = true;
+
+      if (nameInput.value.trim().length < 2) {
+        errName.classList.remove('hidden');
+        nameInput.classList.add('border-rose-500');
+        valid = false;
+      } else {
+        errName.classList.add('hidden');
+        nameInput.classList.remove('border-rose-500');
+      }
+
+      if (!isValidEmail(emailInput.value)) {
+        errEmail.classList.remove('hidden');
+        emailInput.classList.add('border-rose-500');
+        valid = false;
+      } else {
+        errEmail.classList.add('hidden');
+        emailInput.classList.remove('border-rose-500');
+      }
+
+      if (messageInput.value.trim().length < 10) {
+        errMessage.classList.remove('hidden');
+        messageInput.classList.add('border-rose-500');
+        valid = false;
+      } else {
+        errMessage.classList.add('hidden');
+        messageInput.classList.remove('border-rose-500');
+      }
+
+      if (!valid) return;
+
+      const senderName = nameInput.value.trim();
+      const senderTopic = topicInput.value;
+      const wrapper = document.getElementById('contact-form-wrapper');
+
+      wrapper.innerHTML = `
+        <div class="py-8 text-center space-y-4">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2 class="font-display font-bold text-2xl text-slate-900 dark:text-white">
+            Message Received, ${senderName}!
+          </h2>
+          <p class="text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto leading-relaxed">
+            Thank you for reaching out regarding <strong>${senderTopic}</strong>. Our editorial team will review your note and reply shortly.
+          </p>
+          <div class="pt-2">
+            <button
+              onclick="renderCurrentView()"
+              class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors"
+            >
+              Send Another Message
+            </button>
+          </div>
+        </div>
+      `;
+      showToast('Your message has been sent!');
+    }
+
+    function copyArticleLink(articleTitle) {
+      const shareText = `${articleTitle} — TECHPULSE (${window.location.href})`;
+      const tempInput = document.createElement('textarea');
+      tempInput.value = shareText;
+      tempInput.setAttribute('readonly', '');
+      tempInput.style.position = 'absolute';
+      tempInput.style.left = '-9999px';
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        showToast('Article link copied to clipboard!');
+      } catch (err) {
+        showToast('Ready to share: ' + articleTitle);
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById('toast-notification');
+      const label = document.getElementById('toast-message');
+      if (!toast || !label) return;
+
+      label.textContent = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3000);
+    }
+
+    // -----------------------------------------------------------------------
+    // 7. INITIALIZE APPLICATION ON LOAD
+    // -----------------------------------------------------------------------
+    window.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      renderNavigation();
+      renderCurrentView();
+    });
+  </script>
+</body>
+</html>
